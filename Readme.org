@@ -16,7 +16,10 @@ nix. It will provide the config of the each application components for the deplo
 It needs the [[https://github.com/hughjfchen/deploy-env][deploy-env]] as the input and evalue the result as an input to the [[https://github.com/hughjfchen/deploy-packer][deploy-packer]].
 
 * Options
-This module defines following options to describe the deployent target:
+This module defines config for some common components of an application.
+
+** db
+The ~db~ module has the following options:
 
 | option           | type | default                  | descriptio                                                                             |
 |------------------+------+--------------------------+----------------------------------------------------------------------------------------|
@@ -29,7 +32,55 @@ This module defines following options to describe the deployent target:
 | dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
 |------------------+------+--------------------------+----------------------------------------------------------------------------------------|
 
-These options are declared in the `env.nix` file under the top level directory.
+These options are declared in the ~db.nix~ file under the top level directory.
+
+** db-gateway
+The ~db-gateway~ module has the following options:
+
+| option           | type | default                  | descriptio                                                                             |
+|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+| hostName         | str  | null                     | hostName                                                                               |
+| dnsName          | str  | null                     | DNS Name                                                                               |
+| ipAddress        | str  | null                     | the IP address of the deployment target machine                                        |
+| processUser      | str  | null                     | user name the process under which the process will run                                 |
+| isSystemdService | bool | true                     | if the application will run as a systemd service                                       |
+| runDir           | str  | /var/${processUser}/run  | the directory under which the intermedia files generated during runtime will be placed |
+| dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
+|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+
+These options are declared in the ~db-gateway.nix~ file under the top level directory.
+
+** api-gateway
+The ~api-gateway~ module has the following options:
+
+| option           | type | default                  | descriptio                                                                             |
+|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+| hostName         | str  | null                     | hostName                                                                               |
+| dnsName          | str  | null                     | DNS Name                                                                               |
+| ipAddress        | str  | null                     | the IP address of the deployment target machine                                        |
+| processUser      | str  | null                     | user name the process under which the process will run                                 |
+| isSystemdService | bool | true                     | if the application will run as a systemd service                                       |
+| runDir           | str  | /var/${processUser}/run  | the directory under which the intermedia files generated during runtime will be placed |
+| dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
+|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+
+These options are declared in the ~api-gateway.nix~ file under the top level directory.
+
+** messaging
+The ~messaging~ module has the following options:
+
+| option           | type | default                  | descriptio                                                                             |
+|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+| hostName         | str  | null                     | hostName                                                                               |
+| dnsName          | str  | null                     | DNS Name                                                                               |
+| ipAddress        | str  | null                     | the IP address of the deployment target machine                                        |
+| processUser      | str  | null                     | user name the process under which the process will run                                 |
+| isSystemdService | bool | true                     | if the application will run as a systemd service                                       |
+| runDir           | str  | /var/${processUser}/run  | the directory under which the intermedia files generated during runtime will be placed |
+| dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
+|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+
+These options are declared in the ~messaging.nix~ file under the top level directory.
 
 * Directory Structure
 A directory structure is used to describe the deployment target. It composes with tow parts,
