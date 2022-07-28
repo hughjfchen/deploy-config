@@ -19,66 +19,72 @@ It needs the [[https://github.com/hughjfchen/deploy-env][deploy-env]] as the inp
 This module defines config for some common components of an application.
 
 ** db
-The ~db~ module has the following options:
+The ~db~ module is based on ~postgresql~ and has the following options:
 
-| option           | type | default                  | descriptio                                                                             |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
-| hostName         | str  | null                     | hostName                                                                               |
-| dnsName          | str  | null                     | DNS Name                                                                               |
-| ipAddress        | str  | null                     | the IP address of the deployment target machine                                        |
-| processUser      | str  | null                     | user name the process under which the process will run                                 |
-| isSystemdService | bool | true                     | if the application will run as a systemd service                                       |
-| runDir           | str  | /var/${processUser}/run  | the directory under which the intermedia files generated during runtime will be placed |
-| dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+| option             | type | default                  | descriptio                                |
+|--------------------+------+--------------------------+-------------------------------------------|
+| host               | str  | null                     | hostName                                  |
+| port               | int  | 5432                     | DNS Name                                  |
+| database           | str  | null                     | the database nmae                         |
+| dataSchema         | str  | null                     | the schema name for data                  |
+| dataSchemaUser     | bool | true                     | the user name to access the data schema   |
+| dataSchemaPassword | str  | /var/${processUser}/run  | the password to access to the data schema |
+| apiSchema          | str  | /var/${processUser}/data | the schema name for api                   |
+| apiSchemaUser      |      |                          | the user name to access the api schema    |
+| apiSchemaPassword  |      |                          | the password access to the api schema     |
+| anonRole           |      |                          | the ananymous role name                   |
+| jwtSecret          |      |                          | the secret for JWT token                  |
+| jwtLifeTime        |      |                          | the life timeout for the JWT token        |
+|--------------------+------+--------------------------+-------------------------------------------|
 
 These options are declared in the ~db.nix~ file under the top level directory.
 
 ** db-gateway
-The ~db-gateway~ module has the following options:
+The ~db-gateway~ is based on ~postgrest~ and has the following options:
 
-| option           | type | default                  | descriptio                                                                             |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
-| hostName         | str  | null                     | hostName                                                                               |
-| dnsName          | str  | null                     | DNS Name                                                                               |
-| ipAddress        | str  | null                     | the IP address of the deployment target machine                                        |
-| processUser      | str  | null                     | user name the process under which the process will run                                 |
-| isSystemdService | bool | true                     | if the application will run as a systemd service                                       |
-| runDir           | str  | /var/${processUser}/run  | the directory under which the intermedia files generated during runtime will be placed |
-| dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+| option       | type | default                 | descriptio                                     |
+|--------------+------+-------------------------+------------------------------------------------|
+| db-uri       | str  | null                    | the URI to access the postgresql database      |
+| db-schem     | str  | null                    | the schema name                                |
+| db-anon-role | str  | null                    | the anonymous role name                        |
+| jwt-secret   | str  | null                    | the secret to generate the JWT token           |
+| server-host  | bool | true                    | the db-gateway service host name or IP address |
+| server-port  | str  | /var/${processUser}/run | the db-gateway service port                    |
+|--------------+------+-------------------------+------------------------------------------------|
 
 These options are declared in the ~db-gateway.nix~ file under the top level directory.
 
 ** api-gateway
-The ~api-gateway~ module has the following options:
+The ~api-gateway~ is based on ~nginx~ and has the following options:
 
-| option           | type | default                  | descriptio                                                                             |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
-| hostName         | str  | null                     | hostName                                                                               |
-| dnsName          | str  | null                     | DNS Name                                                                               |
-| ipAddress        | str  | null                     | the IP address of the deployment target machine                                        |
-| processUser      | str  | null                     | user name the process under which the process will run                                 |
-| isSystemdService | bool | true                     | if the application will run as a systemd service                                       |
-| runDir           | str  | /var/${processUser}/run  | the directory under which the intermedia files generated during runtime will be placed |
-| dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+| option         | type | default                  | descriptio                                      |
+|----------------+------+--------------------------+-------------------------------------------------|
+| docRoot        | str  | null                     | the docRoot                                     |
+| uploadHome     | str  | null                     | the home directory for upload                   |
+| logDir         | str  | null                     | the directory for log                           |
+| cacheDir       | str  | null                     | the directory for cache                         |
+| serverName     | bool | true                     | the servername                                  |
+| listenPort     | str  | /var/${processUser}/run  | the port number                                 |
+| uploadMaxSize  | str  | /var/${processUser}/data | the max size to allow for upload                |
+| resolver       |      |                          | the resolver                                    |
+| postgrest-host |      |                          | the dnsName or IP address for postgrest service |
+| postgrest-port |      |                          | the port number for the postgrest service       |
+|----------------+------+--------------------------+-------------------------------------------------|
 
 These options are declared in the ~api-gateway.nix~ file under the top level directory.
 
 ** messaging
-The ~messaging~ module has the following options:
+The ~messaging~ module is based on ~rabbitmq~ and has the following options:
 
-| option           | type | default                  | descriptio                                                                             |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
-| hostName         | str  | null                     | hostName                                                                               |
-| dnsName          | str  | null                     | DNS Name                                                                               |
-| ipAddress        | str  | null                     | the IP address of the deployment target machine                                        |
-| processUser      | str  | null                     | user name the process under which the process will run                                 |
-| isSystemdService | bool | true                     | if the application will run as a systemd service                                       |
-| runDir           | str  | /var/${processUser}/run  | the directory under which the intermedia files generated during runtime will be placed |
-| dataDir          | str  | /var/${processUser}/data | the directory under which the data files will be placed                                |
-|------------------+------+--------------------------+----------------------------------------------------------------------------------------|
+| option   | type | default                 | descriptio                                 |
+|----------+------+-------------------------+--------------------------------------------|
+| host     | str  | null                    | hostName                                   |
+| port     | str  | null                    | port number                                |
+| user     | str  | null                    | user name to access the messaging engine   |
+| password | str  | null                    | password to access to the messaging engine |
+| topic    | bool | true                    | the default topic name                     |
+| queue    | str  | /var/${processUser}/run | the default queue name                     |
+|----------+------+-------------------------+--------------------------------------------|
 
 These options are declared in the ~messaging.nix~ file under the top level directory.
 
@@ -112,5 +118,4 @@ myPacker = import ./deploy-packer/default.nix {config = myConfig;};
 
 * Todos
 Following enhancement may be implemented in the future release for this module:
-- more options for deployment target
 - more setting samples for common component of application
