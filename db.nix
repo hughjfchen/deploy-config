@@ -13,14 +13,14 @@
         '';
       };
       host = lib.mkOption {
-        type = lib.types.str;
+        type = lib.types.nonEmptyStr;
         default = "${env.db.ipAddress}";
         description = ''
           The database host.
         '';
       };
       port = lib.mkOption {
-        type = lib.types.int;
+        type = lib.types.port;
         default = 5432;
         description = ''
           The listening port for database.

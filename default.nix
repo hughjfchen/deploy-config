@@ -17,7 +17,7 @@ in let
   configBuilder = lib.evalModules { modules = builtinModules ++ modules; };
 
   builtinModules = [ argsModule ] ++ [ enableModule ]
-    ++ import ../../../../module-list.nix ++ import ./module-list.nix;
+    ++ import ./module-list.nix;
 
   argsModule = {
     _file = ./config.nix;
