@@ -13,7 +13,8 @@ based on the specified directory structure.
 * What is this for
 This module is the most important building block for the deployment solution based on
 nix. It will provide the config of the each application components for the deployment target machine.
-It needs the [[https://github.com/hughjfchen/deploy-env][deploy-env]] as the input and evalue the result as an input to the [[https://github.com/hughjfchen/deploy-packer][deploy-packer]].
+It needs the [[https://github.com/hughjfchen/deploy-env][deploy-env]] as the input and evalue the result as an input to other derivations for
+release.
 
 * Options
 This module defines config for some common components of an application.
@@ -101,14 +102,14 @@ deployment target:
 1. make a directory under the ~site~ which specifiy the target place
 2. make a directory ~phase~ under the directory created in step 1
 3. make a directory ~test~, ~stage~ and ~production~ under the directory created in step 2
-4. under each directory created in step 3, add a nix module definition file for each component
+4. under each directory created in step 3, add a nix definition file for each component
    of the application, for some common component, e.g. DB, API-Gateway or Messaging etc.
    you can copy a sample nix file from ~site/local/phase/test~ directory as reference.
 
 * How to use it
-Usually, this module will be used as a dependency of another module [[https://github.com/hughjfchen/deploy-packer][deploy-packer]], so you will import
-this module into your ~release.nix~ file, and pass it to the ~deploy-packer~ derivation. Refer to following
-code:
+Usually, this module will be used as a dependency of another derivations needed for release,so you will import
+this module into your ~release.nix~ file, and pass it to the derivation which need to be configured. Refer to
+following code:
 #+begin_src nix
 myEnv = import (builtins.fetchGit {url = "https://github.com/hughjfchen/deploy-env"; })
   { inherit pkgs; modules = [
