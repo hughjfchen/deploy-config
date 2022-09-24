@@ -499,6 +499,15 @@
           The url to upload the report.
         '';
       };
+      "curlcmdlineoptions.downloadbaseurl" = lib.mkOption {
+        type = lib.types.str;
+        default = "http://${config.api-gw.serverName}:${
+            toString config.api-gw.listenPort
+          }/";
+        description = ''
+          The base url to download dump files.
+        '';
+      };
     };
   };
 }
