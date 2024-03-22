@@ -10,8 +10,6 @@ in let
     builtins.abort
     "The pkgs argument must be an attribute set or a path to an attribute set.";
 
-  inherit (pkgs)
-  ;
   lib = pkgs.lib;
 
   configBuilder = lib.evalModules { modules = builtinModules ++ modules; };
